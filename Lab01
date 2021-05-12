@@ -1,0 +1,149 @@
+package MauPhan5;
+
+import java.util.*;
+
+public class mangDiem {
+    ArrayList<Integer> a = new ArrayList<Integer>();
+    void input(){
+        Scanner kb= new Scanner(System.in);
+        int n;
+        do{
+            System.out.print("Nhap n>0:");
+            n=kb.nextInt();
+        }while(n<=0);
+        for(int i=0; i<=n; i++)
+            a.add((int)(Math.random()*100));
+    }
+    void xuat(String nd){
+        System.out.print(nd);
+        for(int i=0; i<a.size(); i++)
+            System.out.print(a.get(i)+" ");
+        System.out.println("");
+    }
+    int max(){
+        int max=a.get(0);
+        for(int i=1; i<a.size(); i++)
+            if(a.get(i)>max)
+                max=a.get(i);
+        return max;
+    }
+    int min(){
+        int min=a.get(0);
+        for(int i=1; i<a.size(); i++)
+            if(a.get(i)<min)
+                min=a.get(i);
+        return min;
+    }
+    void tongMax(){
+        int so1 = 0,so2 = 0;
+        int tong=(a.get(0)+a.get(1));
+            for(int i=0;i<a.size()-1;i++)
+                if(tong<(a.get(i)+a.get(i+1))){
+                    tong=(a.get(i)+a.get(i+1));
+                    so1=a.get(i);
+                    so2=a.get(i+1);
+                }
+        System.out.println("Max 1:"+so1);
+        System.out.println("Max 2:"+so2);
+        System.out.println("2 so lien tiep co tong max = "+so1+"+"+so2+" = "+(so1+so2));
+    }
+    boolean soChan(int x){
+        for(int i=1; i<a.size(); i++)
+            if(x%2==0) return true;
+        return false;
+    }
+    int tongSoChan(){
+        System.out.print("Tong cac so chan = ");
+        int s=0;
+        for(int i=0; i<a.size(); i++)
+            if(soChan(a.get(i))==true){
+                System.out.print(a.get(i)+"+");
+                s=s+a.get(i);
+            }
+        System.out.println("\b = "+s);
+        return s;
+    }
+    boolean nguyenTo(int x){
+        int dem=0;
+        for(int i=1; i<=x; i++)
+            if(x%i==0) dem++;
+        return dem==2;
+    }
+    void TBCSoNT(){
+        double s1=0, dem=0;
+        System.out.print("TBC cac so nguyen to = (");
+        for(int i=0; i<a.size(); i++)
+            if(nguyenTo(a.get(i))==true){
+                System.out.print(a.get(i)+"+");
+                s1=s1+a.get(i);
+                dem++;
+            }
+        System.out.println("\b)/"+dem+" = "+(s1/dem));
+    }
+    int daoNguoc(int x){
+        int s=0, du=0;
+        while(x!=0){
+            du=x%10;
+            s=s*10+du;
+            x=x/10;
+        }
+        return s;
+    }
+    boolean doiXung(int x){
+        if(x>10&&daoNguoc(x)==x) return true;
+        return false;
+    }
+    int soDX(){
+        System.out.print("Cac so doi xung:(");
+        for(int i=0; i<a.size(); i++)
+            if(doiXung(a.get(i))==true){
+                System.out.print(a.get(i)+" , ");
+            }
+        System.out.print("\b)");
+        return 0;
+    }
+    void sapXepGiam(){
+        for(int i=0; i<a.size()-1; i++)
+            for(int j=i+1; j<a.size(); j++)
+                if(a.get(i)<a.get(j)){
+                    int t=a.get(i);
+                    a.set(i,a.get(j));
+                    a.set(j,t);
+                }
+        
+    }
+    public void chenX(int x, int y){
+        a.add(y,x);
+    }
+    public void xoaSoChan(){
+        int i=0;
+        while(i<a.size())
+            if(a.get(i)%2==0)
+                a.remove(i);
+            else i++;
+    }
+    void output(){
+        xuat("Mang vua tao:");
+        System.out.println("Max - Min ="+max()+"-"+min()+" = "+(max()-min()));
+        tongMax();
+        tongSoChan();
+        TBCSoNT();
+        soDX();
+        System.out.print("\nNhap so can chen vao vi tri:");
+        Scanner kb= new Scanner(System.in);
+        int x=kb.nextInt();
+        int y=kb.nextInt();
+        chenX(x,y);
+        sapXepGiam();
+        xuat("Sau khi sap xep giam:");
+        xuat("Sau khi chen"+x+"vao vi tri"+y+":");
+        xoaSoChan();
+        xuat("Sau khi xoa so chan:");
+        
+    }
+    public static void main(String [] args){
+        mangDiem a= new mangDiem();
+        a.input();
+        a.output();
+    }
+}
